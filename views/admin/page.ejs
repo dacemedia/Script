@@ -1,0 +1,57 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="py-3 mb-4">Pages</h4>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <form action="" method="post">
+                                    <div class="card-body">
+                                       <% if(typeof message !== 'undefined'){ %>
+                                           <div class="alert alert-primary alert-dismissible" role="alert"><%= message %>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                           </div>
+                                        <% } %>
+                                        <% if(flash.error.length> 0){ %>
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <%= flash.error %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row mb-10">
+                                                    <div class="col-md-6">
+                                                        <label class="col-form-label" for="basic-icon-default-fullname">Terms and Conditions</label>
+                                                            <div id="terms_and_conditions"><%- pages ?pages.terms_and_conditions : '' %></div>
+                                                            <input name="terms_and_conditions" type="hidden">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="col-form-label" for="basic-icon-default-fullname">Privacy Policy</label>
+                                                            <div id="privacy_policy"><%- pages ?pages.privacy_policy : '' %></div>
+                                                            <input name="privacy_policy" type="hidden">
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-md-6">
+                                                        <label class="col-form-label" for="basic-icon-default-fullname">About Us</label>
+                                                            <div id="about_us"><%- pages ?pages.about_us : '' %></div>
+                                                            <input name="about_us" type="hidden">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <div class="row mt-5">
+                                            <div class="col-sm-11">
+                                                <button type="submit" class="btn btn-primary" onclick="submitAllQuillData();">Submit</button>
+                                                <a href="/dashboard" class="ms-3 btn btn-dark">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <%- include('../layout/footer.ejs') %>

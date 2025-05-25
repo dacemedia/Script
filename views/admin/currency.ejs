@@ -1,0 +1,46 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="py-3 mb-4">Currency</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <form action="" method="post">
+                                        <div class="card-body">
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Currency</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-select" id="inputGroupSelect01"
+                                                        name="currency">
+                                                        <option value="" disabled selected>Choose...</option>
+                                                        <option value="ZMW" <% if (selectedCurrency==="ZMW" ) { %>
+                                                            selected<% } %>>ZK (ZMW)</option>
+                                                        <option value="USD" <% if (selectedCurrency==="USD" ) { %>
+                                                            selected<% } %>>$ (USD)</option>
+                                                        <option value="EUR" <% if (selectedCurrency==="EUR" ) { %>
+                                                            selected<% } %>>€ (EUR)</option>
+                                                        <option value="CNY" <% if (selectedCurrency==="CNY" ) { %>
+                                                            selected<% } %>>¥ (CNY)</option>
+                                                        <option value="GBP" <% if (selectedCurrency==="GBP" ) { %>
+                                                            selected<% } %>>£ (GBP)</option>
+                                                        <option value="INR" <% if (selectedCurrency==="INR" ) { %>
+                                                            selected<% } %>>₹ (INR)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end">
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    <%- include('../layout/footer.ejs') %>

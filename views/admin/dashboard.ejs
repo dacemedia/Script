@@ -1,0 +1,116 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+                <div class="content-wrapper">
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <div class="col-lg-12 col-md-12 order-1 dash-four-box">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-4 mb-4">
+                                    <div class="card">
+                                        <a href="/view-users" class="dash-box">
+                                            <div class="card-body">
+                                                <% if(typeof message !== 'undefined'){ %>
+                                                    <div class="alert alert-primary alert-dismissible" role="alert"><%= message %>
+                                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                                 <% } %>
+                                                 <% if(flash.error.length> 0){ %>
+                                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                                        <%= flash.error %>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                                <% } %>
+                                                <div class="card-title d-flex align-items-start justify-content-between">
+                                                    <div class="avatar flex-shrink-0 dash-icon dash-box-1">
+                                                        <img src="./assets/img/icons/unicons/customer.png" alt="Credit Card" class="rounded">
+                                                    </div>
+                                                </div>
+                                                <span class="card-title2">Total Users</span>
+                                                <h3 class="card-title text-nowrap mt-2 mb-1"></h3>
+                                                <span class="card-title2"><strong><%= users.length %></strong></span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-4 mb-4">
+                                    <div class="card">
+                                        <a href="/view-category" class="dash-box">
+                                            <div class="card-body">
+                                                <div class="card-title d-flex align-items-start justify-content-between">
+                                                    <div class="avatar flex-shrink-0 dash-icon dash-box-2">
+                                                        <img src="./assets/img/icons/unicons/category2a.png" alt="Credit Card" class="rounded">
+                                                    </div>
+                                                </div>
+                                                <span class="card-title2">Total Categories</span>
+                                                <h3 class="card-title text-nowrap mt-2 mb-1"></h3>
+                                                <span class="card-title2"><strong><%= categories.length %></strong></span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-4 mb-4">
+                                    <div class="card">
+                                        <a href="/view-quiz" class="dash-box">
+                                            <div class="card-body">
+                                                <div class="card-title d-flex align-items-start justify-content-between">
+                                                    <div class="avatar dash-icon  dash-box-3 flex-shrink-0">
+                                                        <img src="./assets/img/icons/unicons/quiz2.png" alt="Credit Card" class="rounded">
+                                                    </div>
+                                                </div>
+                                                <span class="card-title2">Total Quizzes</span>
+                                                <h3 class="card-title text-nowrap mt-2 mb-1"></h3>
+                                                <span class="card-title2"><strong><%= quizzes.length %></strong></span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-4 mb-4">
+                                    <div class="card">
+                                        <a href="/view-questions" class="dash-box">
+                                            <div class="card-body">
+                                                <div class="card-title d-flex align-items-start justify-content-between">
+                                                    <div class="avatar flex-shrink-0 dash-icon dash-box-3">
+                                                        <img src="./assets/img/icons/unicons/questions.png" alt="Credit Card" class="rounded">
+                                                    </div>
+                                                </div>
+                                                <span class="card-title2">Total Questions</span>
+                                                <h3 class="card-title text-nowrap mt-2 mb-1"></h3>
+                                                <span class="card-title2"><strong><%= questions.length %></strong></span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-lg-4 col-md-4 col-4 mb-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-title d-flex align-items-start justify-content-between">
+                                                <div class="avatar flex-shrink-0 dash-icon dash-box-1">
+                                                    <img src="./assets/img/icons/unicons/menu2.png" alt="Credit Card" class="rounded">
+                                                </div>
+                                            </div>
+                                            <span class="card-title2">Total Featured Categories</span>
+                                            <h3 class="card-title text-nowrap mt-2 mb-1"></h3>
+                                            <span class="card-title2"><strong><%= feat_categories.length %></strong></span>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-4 col-md-4 col-4 mb-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-title d-flex align-items-start justify-content-between">
+                                                <div class="avatar flex-shrink-0 dash-icon dash-box-2">
+                                                    <img src="./assets/img/icons/unicons/notification2.png" alt="Credit Card" class="rounded">
+                                                </div>
+                                            </div>
+                                            <span class="card-title2">Total Notifications</span>
+                                            <h3 class="card-title text-nowrap mt-2 mb-1"></h3>
+                                            <span class="card-title2"><strong>10</strong></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <%- include('../layout/footer.ejs') %>

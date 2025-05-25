@@ -1,0 +1,119 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+                <div class="content-wrapper">
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4 class="py-3 mb-4">
+                                    <span class="text-muted fw-light">Quiz /</span> Edit Quiz
+                                </h4>
+                                <div class="card mb-4">
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                        <div class="card-body">
+                                            <% if(typeof message !== 'undefined'){ %>
+                                                <h3 class="mt-3 text- property" style="color:green;"><%= message %></h3>
+                                            <% } %>
+                                            <% if(flash.error.length> 0){ %>
+                                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                                    <%= flash.error %>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            <% } %>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Category</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="input-group">
+                                                                <select class="form-select" name="categoryId" id="defaultSelect">
+                                                                    <% if(category.length> 0 ) { %>
+                                                                        <option>Select Category</option>
+                                                                        <% for(let j=0; j < category.length; j++) { %>
+                                                                            <% if (String(editquiz.categoryId._id) === String(category[j]._id)) { %>
+                                                                                    <option  value="<%= category[j]._id %>" selected><%= category[j].name %></option>
+                                                                            <% } else{ %>
+                                                                                    <option  value="<%= category[j]._id %>"><%= category[j].name %></option>
+                                                                            <% } %>
+                                                                        <% }  } %>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Quiz Name</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="text" class="form-control" name="name" required 
+                                                                value="<%= editquiz.name %>"  placeholder="Enter Quiz Title"/>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="id" value="<%= editquiz._id %>">
+                                                    </div>
+                                                    <div class="row mb-4">
+                                                        <label class="col-sm-2 col-form-label"for="basic-icon-default-fullname">Preview Image</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="input-group input-group-merge">
+                                                                <span class="md-img mb-3"><img src="./assets/userImages/<%= editquiz.image %>" alt="Avatar"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-fullname">Image</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="input-group input-group-merge">
+                                                                <span id="basic-icon-default-fullname2" class="input-group-text"><i class="bx bx-image"></i></span>
+                                                                <input type="file" id="upload" name="image" class="form-control" accept="image/png, image/jpeg,image/jpg" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Timer</label>
+                                                            <div class="col-sm-10">
+                                                                <div class="form-check form-switch mb-2">
+                                                                    <input class="form-check-input" type="checkbox" name="timer_status" id="flexSwitchCheckDefault"<% if (editquiz.timer_status==1) { %>checked<% } else {} %>></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <div class="row mb-3 min_per_quiz">
+                                                        <label class="col-sm-2 col-form-label" for="flatpickr-time">minutes per quiz</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="mb-3">
+                                                                <input type="number" class="form-control"  name="minutes_per_quiz" value="<%= editquiz.minutes_per_quiz %>"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 col-form-label" for="flatpickr-time">minimum required points</label>
+                                                        <div class="col-sm-10">
+                                                            <div class="mb-3">
+                                                                <input type="text" class="form-control"  name="minimum_required_points" value="<%= editquiz.minimum_required_points %>"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label class="col-sm-2 col-form-label"for="basic-icon-default-fullname">Description</label>
+                                                        <div class="col-sm-10">
+                                                            <div id="description"><%- editquiz.description %></div>
+                                                            <input name="description" type="hidden">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <div class="row mt-5">
+                                                <div class="col-sm-2"></div>
+                                                <div class="col-sm-10">
+                                                    <button type="submit" class="btn btn-primary" onclick="myFunction();">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <%- include('../layout/footer.ejs') %>
+
+
+           

@@ -1,0 +1,73 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="py-3 mb-4">Ads Settings</h4>
+                            <div class="card mb-4">
+                                <form action="" method="post">
+                                    <div class="card-body">
+                                        <% if(typeof message !== 'undefined'){ %>
+                                            <div class="alert alert-primary alert-dismissible" role="alert"><%= message %>
+                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                         <% } %>
+                                         <% if(flash.error.length> 0){ %>
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <%= flash.error %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="d-flex mb-3 justify-content-between">
+                                                    <label class="col-form-label" for="basic-icon-default-fullname">Banner Ad</label>
+                                                        <div class="form-check form-switch mb-2">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="banner_ad"  
+                                                            <% if(adsdata) { if(adsdata.banner_ad == 1) { %> checked <% }} %>>
+                                                        </div>
+                                                </div>
+                                                <div class="d-flex mb-3 justify-content-between">
+                                                    <label class="col-form-label"for="basic-icon-default-fullname">Interstitial Ad</label>
+                                                        <div class="form-check form-switch mb-2">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="interstitial_ad"
+                                                            <% if(adsdata) { if(adsdata.interstitial_ad == 1) { %> checked <% }} %>>
+                                                        </div>
+                                                </div>
+                                                <div class="d-flex mb-3 justify-content-between">
+                                                    <label class="col-form-label"for="basic-icon-default-fullname">Rewarded Video Ad</label>
+                                                        <div class="form-check form-switch mb-2">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="rewarded_video_ad"
+                                                            <% if(adsdata) { if(adsdata.rewarded_video_ad == 1) { %> checked <% }} %>>
+                                                        </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-md-6">
+                                                        <label for="basic-icon-default-fullnamet" class="col-form-label">Rewarded Points For Each Video Ads</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control" name="rewarded_points_for_each_video_ads" value="<%= adsdata ? adsdata.rewarded_points_for_each_video_ads :  ''  %>" required placeholder="Enter Rewarded Points For Video Ads"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8"></div>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <a href="/dashboard" class="ms-3 btn btn-dark">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <%- include('../layout/footer.ejs') %>
+
+
+           

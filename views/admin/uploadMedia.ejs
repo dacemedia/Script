@@ -1,0 +1,60 @@
+
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="py-3 mb-4">
+                                <span class="text-muted fw-light">Media /</span> Add Media
+                              </h4>
+                            <div class="card mb-4 h-px-480">
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <div class="card-body">
+                                        <% if(typeof message !== 'undefined'){ %>
+                                            <div class="alert alert-primary alert-dismissible" role="alert"><%= message %>
+                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                         <% } %>
+                                         <% if(flash.error.length> 0){ %>
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <%= flash.error %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"for="basic-icon-default-fullname">Image</label>
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group input-group-merge">
+                                                            <span id="basic-icon-default-fullname2" class="input-group-text">
+                                                                <i class="bx bx-image"></i>
+                                                            </span>
+                                                            <input type="file" id="upload" name="file" class="form-control" multiple accept="image/png, image/jpeg,image/jpg,audio/mpeg,audio/mp3,audio/wav,audio/ogg" required/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-sm-2"></div>
+                                        <div class="col-sm-10">
+                                            <button type="submit" class="btn btn-primary" onclick="myFunction();">Submit</button>
+                                            <a href="/view-intro" class="ms-3 btn btn-dark">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<%- include('../layout/footer.ejs') %>
+
+
+           

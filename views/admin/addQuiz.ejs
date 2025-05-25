@@ -1,0 +1,135 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="py-3 mb-4"><span class="text-muted fw-light">Quiz /</span> Add Quiz</h4>
+                            <div class="card mb-4">
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <div class="card-body">
+                                        <% if(typeof message !== 'undefined'){ %>
+                                            <div class="alert alert-primary alert-dismissible" role="alert"><%= message %>
+                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                         <% } %>
+                                         <% if(flash.error.length> 0){ %>
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <%= flash.error %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Category</label>
+                                                            <div class="col-sm-10">
+                                                                <div class="input-group">
+                                                                    <select class="form-select" name="categoryId" id="defaultSelect">
+                                                                        <% if(category.length> 0 ) { %>
+                                                                            <option value="" disabled selected>Select Category...</option>
+                                                                            <% for(let j=0; j < category.length; j++) {  %>
+                                                                                <option  value="<%= category[j]._id %>"><%= category[j].name %></option>
+                                                                            <% } } %>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <label class="col-sm-2 col-form-label"
+                                                            for="basic-icon-default-fullname">Quiz Name</label>
+                                                            <div class="col-sm-10">
+                                                                <div class="input-group input-group-merge">
+                                                                    <input type="text" class="form-control" name="name" required placeholder="Enter Quiz Title"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-md-12">
+                                                        <div class="row mb-3">
+                                                            <label class="col-sm-1 col-form-label" for="basic-icon-default-fullname">Image</label>
+                                                            <div class="col-sm-11">
+                                                                <div class="input-group input-group-merge">
+                                                                    <span id="basic-icon-default-fullname2" class="input-group-text">
+                                                                        <i class="bx bx-image"></i>
+                                                                    </span>
+                                                                    <input type="file" id="upload" name="image" class="form-control" required accept="image/png, image/jpeg,image/jpg" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-md-12">
+                                                        <div class="row mb-3">
+                                                            <label class="col-sm-1 col-form-label"
+                                                            for="basic-icon-default-fullname">Timer</label>
+                                                            <div class="col-sm-11">
+                                                                <div class="form-check form-switch mb-2">
+                                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="timer_status" required> 
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 min_per_quiz">
+                                                        <div class="row">
+                                                            <label class="col-sm-1 col-form-label" for="flatpickr-time">minutes per quiz</label>
+                                                            <div class="col-sm-11">
+                                                                <div class="mb-3">
+                                                                    <input type="number" class="form-control" name="minutes_per_quiz"/>
+                                                                  </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <label class="col-sm-1 col-form-label" for="flatpickr-time">minimum required points</label>
+                                                            <div class="col-sm-11">
+                                                                <div class="mb-3">
+                                                                    <input type="text" class="form-control" name="minimum_required_points"/>
+                                                                  </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-1 col-form-label"for="basic-icon-default-fullname">Description</label>
+                                                    <div class="col-sm-11">
+                                                        <div id="description"></div>
+                                                        <input name="description" type="hidden">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-sm-1 col-form-label" for="basic-icon-default-fullname">is Active</label>
+                                                    <div class="col-sm-11">
+                                                        <div class="form-check form-switch mb-2">
+                                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="is_active">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <div class="row mt-5">
+                                            <div class="col-sm-1"></div>
+                                            <div class="col-sm-8">
+                                                <button type="submit" class="btn btn-primary" onclick="myFunction();">Submit</button>
+                                                <a href="/view-quiz" class="ms-3 btn btn-dark">Back</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <%- include('../layout/footer.ejs') %>
+
+
+           

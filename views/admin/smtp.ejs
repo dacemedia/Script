@@ -1,0 +1,91 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="py-3 mb-4">
+                                <span class="text-muted fw-light">SMTP /</span> SMTP Settings </h4>
+                            <div class="card mb-4 h-px-480">
+                                <form action="" method="post">
+                                    <div class="card-body">
+                                        <% if(typeof message !== 'undefined'){ %>
+                                            <div class="alert alert-primary alert-dismissible" role="alert"><%= message %>
+                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                         <% } %>
+                                         <% if(flash.error.length> 0){ %>
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <%= flash.error %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Host</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control form-control-solid" placeholder="Enter Host" name="host" required value="<%= smtp ? smtp.host :  ''  %>"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Port</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control form-control-solid" placeholder="Enter Port" name="port" required value="<%= smtp ? smtp.port :  ''  %>"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label"for="basic-icon-default-fullname">Email</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control form-control-solid" placeholder="Enter Email" name="email" required value="<%= smtp ? smtp.email :  ''  %>"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Password</label>
+                                                    <div class="col-sm-10 form-password-toggle">
+                                                        <div class="input-group">
+                                                            <input type="password" class="form-control" id="basic-default-password12" placeholder="············" aria-describedby="basic-default-password2" name="password" required value="<%= smtp ? smtp.password :  ''  %>">
+                                                            <span id="basic-default-password2" class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                                          </div>
+                                                        <!-- <input type="text" class="form-control form-control-solid" placeholder="Enter Password" name="password" required value="<%= smtp ? smtp.password :  ''  %>"/> -->
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Encryption</label>
+                                                        <div class="col-sm-10">
+                                                            <% if(smtp){ %>
+                                                                <select class="form-select form-select-solid" name="encryption" data-control="select2" data-dropdown-parent="#kt_header_search" data-placeholder="Select Encryption Type.." class="form-select form-select-sm form-select-solid">
+                                                                    <option value="SSL" <% if(smtp.encryption == "SSL") { %> selected <%} else {} %>>SSL</option>
+                                                                    <option value="TLS" <% if(smtp.encryption == "TLS") { %> selected <%} else {} %>>TLS</option>
+                                                                </select>
+                                                            <% } else { %>
+                                                                <select class="form-select form-select-solid" name="encryption" data-control="select2" data-dropdown-parent="#kt_header_search" data-placeholder="Select Encryption Type.." class="form-select form-select-sm form-select-solid">
+                                                                    <option value="SSL">SSL</option>
+                                                                    <option value="TLS">TLS</option>
+                                                                </select>
+                                                            <% } %>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-sm-2"></div>
+                                        <div class="col-sm-10 ps-4">
+                                            <button type="submit" class="btn btn-primary" onclick="myFunction();">Submit</button>
+                                            <a href="/dashboard" class="ms-3 btn btn-dark">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+<%- include('../layout/footer.ejs') %>
+
+
+           

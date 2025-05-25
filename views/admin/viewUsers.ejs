@@ -1,0 +1,148 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="py-3 mb-4">
+                        <span class="text-muted fw-light">Users /</span> All Users
+                    </h4>
+                    <div class="row">
+                        <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="users-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr No.</th>
+                                                    <th>Image</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
+                                                    <th>Phone</th>
+                                                    <th>Points</th>
+                                                    <th>Verify</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% if(users.length> 0) {
+                                                    for(let i=0; i < users.length; i++) { %>
+                                                        <tr>
+                                                            <td><%= i+1 %></td>
+                                                            <td>
+                                                                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar def-avatar avatar-xs pull-up" title="<%= users[i].username %>"data-bs-original-title="">
+                                                                        
+                                                                        <% if(users[i].image) { %>
+                                                                                <img src="./assets/userImages/<%= users[i].image %>" alt="<%= users[i].username %>" class="rounded-circle">
+                                                                        <% } else { %>
+                                                                            <div class="text-wrap">
+                                                                                <div class="fs-5 bg-gray text-white rounded-circle text-center" style="width:30px;height:30px;"><%= users[i].username.charAt(0); %></div>
+                                                                            </div>
+                                                                        <% } %>
+                                                                    </li>
+                                                                </ul>
+                                                            </td>
+                                                            <td>
+                                                                <strong><%= users[i].username %></strong>
+                                                            </td>
+                                                            <td>
+                                                                <%= users[i].email %>
+                                                            </td>
+                                                            <td>
+                                                                <%= users[i].phone %>
+                                                            </td>
+                                                            <td>
+                                                                <strong><%= users[i].points %></strong>
+                                                            </td>
+                                                            <td>
+                                                                <% if (users[i].is_verified=="1" ) { %>
+                                                                    <span class="text-primary">Yes</span>
+                                                                    <% } else { %>
+                                                                        <span class="text-danger">No</span>
+                                                                <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <% if(loginData.is_admin==1) { %>
+                                                                    <form class="toggle-form" data-user-id="<%= users[i]._id %>"data-action="/view-users/<%= users[i]._id %>/toggle" method="POST">
+                                                                        <button type="button" class="btn <%= users[i].active ? 'btn-primary' : 'btn-danger' %> toggle-button2" 
+                                                                            data-user-active="<%= users[i].active ? 'Active' : 'Deactivate' %>" 
+                                                                            data-user-username="<%= users[i].username %>">
+                                                                            <%= users[i].active ? 'Active' : 'Deactivate' %>
+                                                                        </button>
+                                                                    </form>
+                                                                <% } else { %>
+                                                                    <button type="" class="btn <%= users[i].active ? 'btn-primary' : 'btn-danger' %>"
+                                                                        onclick="return alert(`You have no access to edit <%= users[i].username %>.` )">
+                                                                        <%= users[i].active ? 'Active'
+                                                                            : 'Deactive' %>
+                                                                    </button>
+                                                                <% } } }%>
+                                                            </td>
+                                                        </tr>
+                                                    <tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery('.toggle-button2').on('click', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            const form = jQuery(this).closest('form');
+            const userId = form.data('user-id');
+            const action = form.data('action');
+            const userActive = form.find('.toggle-button2').hasClass('btn-primary');
+            var username = $(this).data('user-username');
+
+            let confirmationMessage;
+
+            if (userActive) {
+                confirmationMessage = `Are you sure you want to Deactivate ${username} ?`;
+            } else {
+                confirmationMessage = `Are you sure you want to Activate ${username} ?`;
+            }
+
+            if (confirm(confirmationMessage)) {
+                jQuery.ajax({
+                    type: "POST",
+                    url: action,
+                    data: { userId: userId },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success === 1) {
+                            if (data.active) {
+                                form.find('.toggle-button2')
+                                    .removeClass('btn-danger')
+                                    .addClass('btn-primary')
+                                    .text('Active');
+                            } else {
+                                form.find('.toggle-button2')
+                                    .removeClass('btn-primary')
+                                    .addClass('btn-danger')
+                                    .text('Deactivate');
+                            }
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+        });
+    });
+</script>
+<%- include('../layout/footer.ejs') %>
+
+
+
+
+
+
+

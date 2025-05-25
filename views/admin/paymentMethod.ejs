@@ -1,0 +1,146 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="btnwrap mb-4">
+                                <a href="/add-payment-method" class="btn btn-primary">Add Payment Method</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="banner-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr No</th>
+                                                    <th>Image</th>
+                                                    <th>Title</th>
+                                                    <th>is_enable</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% let cnt=1 %>
+                                                <% paymentMethod.forEach(function(allMethod){ %>
+                                                    <tr>
+                                                        <td>
+                                                            <strong><%= cnt++ %></strong>
+                                                        </td>
+                                                        <td>
+                                                             <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                                                <li data-bs-toggle="tooltip"
+                                                                    data-popup="tooltip-custom"
+                                                                    data-bs-placement="top"
+                                                                    class="avatar def-avatar avatar-xs pull-up" title="<%= allMethod.name %>"
+                                                                    data-bs-original-title="">
+                                                                    <img src="./assets/userImages/<%= allMethod.image %>"
+                                                                        alt="Avatar" class="rounded-circle">
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <strong> <%= allMethod.name %></strong>
+                                                        </td>
+                                                        <% for (let i in loginData) {
+                                                            if (String(loginData[i]._id) === locals.user.id) {
+                                                                if (loginData[i].is_admin == 1) { %>
+                                                                    <td>
+                                                                        <form action="/update-is-enable/<%= allMethod._id %>/toggle" method="POST" id="toggleForm">
+                                                                            <button type="button" class="btn" id="toggleButton">
+                                                                            <div class="form-check form-switch mb-2">
+                                                                                <input type="hidden" name="title" value="<%= allMethod.name%>"/>
+                                                                                <input class="form-check-input" type="checkbox" name="is_enable" id="flexSwitchCheckDefault" 
+                                                                                <% if (allMethod.is_enable == 1) { %> checked <% } %>>
+                                                                                </button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex gap-3">
+                                                                            <a href="/edit-payment-method?id=<%= allMethod._id %>" class="text-success">
+                                                                                <i class="bx bx-edit-alt me-2"></i></a>
+                                                                            <a href="/delete-payment-method?id=<%= allMethod._id %>" 
+                                                                            onclick="return confirm('Are you sure want to delete this <%= allMethod.name %>' )" class="text-danger">
+                                                                            <i class="bx bx-trash me-2"></i></a>
+                                                                        </div>
+                                                                    </td>
+                                                                <% } else if (loginData[i].is_admin == 0) { %>
+                                                                    <td>
+                                                                        <div class="form-check form-switch mb-2" onclick="return alert('You have no access to Enable or Disable.' )">
+                                                                                <input class="form-check-input" type="checkbox" name="is_enable" id="flexSwitchCheckCheckedDisabled" 
+                                                                                <% if (allMethod.is_enable == 1) { %> checked <% } %>  disabled>
+                                                                                
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex gap-3">
+                                                                            <a href="/edit-payment-method?id=<%= allMethod._id %>" class="text-success">
+                                                                            <i class="bx bx-edit-alt me-2"></i></a>
+                                                                            <a href="" onclick="return alert('You have no access to delete <%= allMethod.name %>.' )" class="text-danger">
+                                                                            <i class="bx bx-trash me-2"></i></a>
+                                                                        </div>
+                                                                    </td>
+                                                                <%  }  }  }%> 
+                                                        </tr>
+                                                    <% }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+// <script>
+
+// const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+// checkboxes.forEach(function (checkbox) {
+//     checkbox.addEventListener('click', function () {
+//         const form = checkbox.closest('form');
+//         if (form) {
+//             form.submit();
+//         }
+//     });
+// });
+// </script>
+<script type="text/javascript">
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('click', function (event) {
+        const form = checkbox.closest('form');
+        if (form) {
+            const fieldName = form.querySelector('[name="title"]').value;
+            if (!confirm(`Are you sure you want to ${checkbox.checked ? 'Enable' : 'Disable'} ${fieldName}?`)) {
+                event.preventDefault();
+                    return;
+            }
+            const formData = new FormData(form);
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        // Handle the success response data here
+                        console.log(data);
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            //form.submit();
+        }
+    });
+});
+</script>
+<%- include('../layout/footer.ejs') %>

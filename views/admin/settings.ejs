@@ -1,0 +1,108 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="py-3 mb-4">Points Setting</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <form action="" method="post">
+                                    <div class="card-body">
+                                        <% if(typeof message !== 'undefined'){ %>
+                                            <div class="alert alert-primary alert-dismissible" role="alert"><%= message %>
+                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                         <% } %>
+                                         <% if(flash.error.length> 0){ %>
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <%= flash.error %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row mb-3">
+                                                    <label for="defaultFormControlInput" class="col-form-label col-sm-6">New User Reward Points</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" name="new_user_reward_points" value="<%= settingData ? settingData.new_user_reward_points :  ''  %>" required  placeholder="Enter Minus Grade Points" id="defaultFormControlInput"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label for="defaultFormControlInput" class="col-form-label col-sm-6">Correct Answer Reward per Questions</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" name="correct_ans_reward_per_question" value="<%= settingData ? settingData.correct_ans_reward_per_question :  ''  %>" required placeholder="Enter Welcome Reward Points" id="defaultFormControlInput"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label for="defaultFormControlInput" class="col-form-label col-sm-6">Incorrect Answer Penalty per Questions</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" name="penalty_per_question" value="<%= settingData ? settingData.penalty_per_question :  ''  %>" required placeholder="Enter Point Earn Per Question" id="defaultFormControlInput"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3 self_mode">
+                                                    <label for="defaultFormControlInput" class="col-form-label col-sm-6">Self Challenge Mode</label>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-check form-switch mb-2">
+                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="self_challenge_mode"
+                                                                <% if(settingData) { if(settingData.self_challenge_mode == 1) { %> checked <% }} %>>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <!-- <div class="row mb-3 self_sec">
+                                                    <label for="defaultFormControlInput" class="col-form-label col-sm-6">Self Challenge Points</label>
+                                                    <div class="col-md-6">
+                                                        <input type="text" class="form-control" name="self_challenge_points" value="<%= //settingData ? settingData.self_challenge_points :  ''  %>" required placeholder="Enter Point Earn Per Question" id="defaultFormControlInput"/>
+                                                    </div>
+                                                </div> -->
+                                                <div class="row mb-3 self_sec">
+                                                    <label for="defaultFormControlInput" class="col-form-label col-sm-6">Self Challenge Correct Answer Reward per Questions</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" name="self_challenge_correct_ans_reward_per_question" value="<%= settingData ? settingData.self_challenge_correct_ans_reward_per_question :  ''  %>" required placeholder="Enter Welcome Reward Points" id="defaultFormControlInput"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3 self_sec">
+                                                    <label for="defaultFormControlInput" class="col-form-label col-sm-6">Self Challenge Inorrect Answer Penalty per Questions</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" class="form-control" name="self_challenge_penalty_per_question" value="<%= settingData ? settingData.self_challenge_penalty_per_question :  ''  %>" required placeholder="Enter Welcome Reward Points" id="defaultFormControlInput"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-md-6"></div>
+                                                    <div class="col-md-6">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                        <a href="/dashboard" class="ms-3 btn btn-dark">Back</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        const selfModeCheckbox = document.getElementById("flexSwitchCheckDefault");
+                        const selfSecElements = document.querySelectorAll(".self_sec");
+                
+                        // Function to toggle visibility of self_sec elements
+                        function toggleSelfSec() {
+                            selfSecElements.forEach(element => {
+                                element.style.display = selfModeCheckbox.checked ? "flex" : "none";
+                            });
+                        }
+                
+                        // Initialize visibility on page load
+                        toggleSelfSec();
+                
+                        // Add event listener to the checkbox
+                        selfModeCheckbox.addEventListener("change", toggleSelfSec);
+                    });
+                </script>
+                <%- include('../layout/footer.ejs') %>
+
+
+           

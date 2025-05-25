@@ -1,0 +1,416 @@
+<%- include('../layout/header.ejs') %>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <%- include('../layout/sidebar.ejs') %>
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 class="py-3 mb-4">
+                                <span class="text-muted fw-light">Questions /</span> Add Questions
+                              </h4>
+                            <div class="card mb-4">
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <div class="card-body">
+                                        <% if(typeof message !== 'undefined'){ %>
+                                            <div class="alert alert-primary alert-dismissible" role="alert"><%= message %>
+                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                         <% } %>
+                                         <% if(flash.error.length> 0){ %>
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <%= flash.error %>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        <% } %>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row mb-3">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-2">
+                                                                <label class="col-form-label"for="basic-icon-default-fullname">Category</label>
+                                                            </div>
+                                                            <div class="col-sm-10">
+                                                                <div class="input-group">
+                                                                    <select class="form-select" name="categoryId" id="defaultSelect">
+                                                                        <% if(category.length> 0 ) { %>
+                                                                            <option>Select Category</option>
+                                                                            <% for(let i=0; i < category.length; i++) { %>
+                                                                                <% if (String(editdata.categoryId._id) === String(category[i]._id)) { %>
+                                                                                        <option  value="<%= category[i]._id %>" selected><%= category[i].name %></option>
+                                                                                <% } else { %>
+                                                                                        <option  value="<%= category[i]._id %>"><%= category[i].name %></option>
+                                                                                <% } %>
+                                                                            <% }  } %>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" name="id" value="<%= editdata._id %>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-sm-2">
+                                                                <label class="col-form-label"for="basic-icon-default-fullname">Quiz Name</label>
+                                                            </div>
+                                                            <div class="col-sm-10">
+                                                                <div class="input-group">
+                                                                    <select class="form-select" name="quizId" id="quizSelect">
+                                                                        <option>Select quiz</option>
+                                                                        <% for(let j=0; j < quiz.length; j++) { %>
+                                                                            <% if (category.length > 0) { %>
+                                                                                <% if (String(editdata.quizId._id) === String(quiz[j]._id)) { %>
+                                                                                    <option value="<%= quiz[j]._id %>" selected data-categoryid="<%= editdata.categoryId._id %>"><%= quiz[j].name %></option>
+                                                                                <% } else { %>
+                                                                                    <option value="<%= quiz[j]._id %>" data-categoryid="<%= quiz[j].categoryId %>"><%= quiz[j].name %></option>
+                                                                                <% } %>
+                                                                            <% } %>
+                                                                        <% } %>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-1">
+                                                                <label class="col-form-label" for="basic-icon-default-fullname">Question Type</label>
+                                                            </div>
+                                                            <div class="d-flex col-sm-11">
+                                                                <div class="form-check mt-3 me-3">
+                                                                    <input class="form-check-input text-only-type" type="radio" value="text_only" name="question_type" id="defaultRadio1" 
+                                                                    <% if(editdata.question_type == "text_only") { %> checked <% } else {} %>>
+                                                                    <label class="form-check-label" for="defaultRadio1">Text Only</label>
+                                                                </div>
+                                                                <div class="form-check mt-3 me-3">
+                                                                    <input class="form-check-input true-false-type" type="radio" value="true_false" name="question_type" id="defaultRadio1"
+                                                                    <% if(editdata.question_type == "true_false") { %> checked <% } else {} %>>
+                                                                    <label class="form-check-label" for="defaultRadio1">True / False</label>
+                                                                </div>
+                                                                <div class="form-check mt-3 me-3">
+                                                                    <input class="form-check-input images-type" type="radio" value="images" name="question_type" id="defaultRadio1"
+                                                                    <% if(editdata.question_type == "images") { %> checked <% } else {} %>>
+                                                                    <label class="form-check-label" for="defaultRadio1">Image</label>
+                                                                </div>
+                                                                <div class="form-check mt-3 me-3">
+                                                                    <input class="form-check-input audio-type" type="radio" value="audio" name="question_type" id="defaultRadio1"
+                                                                    <% if(editdata.question_type == "audio") { %> checked <% } else {} %>>
+                                                                    <label class="form-check-label" for="defaultRadio1">Audio</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-1">
+                                                                <label class="col-form-label" for="basic-icon-default-fullname">Question</label>
+                                                            </div>
+                                                            <div class="col-sm-11">
+                                                                <div class="input-group input-group-merge">
+                                                                    <input type="text" class="form-control" name="question_title" required placeholder="Enter Question" value="<%= editdata.question_title %>"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-4 audio-wrap">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-1">
+                                                                <label class="col-form-label" for="basic-icon-default-fullname">Audio</label>
+                                                            </div>
+                                                            <div class="col-sm-6 plyr">
+                                                                <audio controls id="plyr-audio-player">
+                                                                    <source src="./assets/userImages/<%= editdata.audio %>" type="audio/mpeg">
+                                                                  </audio>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3 audio-wrap">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-1">
+                                                                <label class="col-form-label" for="basic-icon-default-fullname">Upload Audio</label>
+                                                            </div>
+                                                            <div class="col-sm-11">
+                                                                <div class="input-group">
+                                                                    <input type="file" accept=".mp3" name="audio" class="form-control"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3 img_upload">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-1">
+                                                                <label class="col-form-label" for="basic-icon-default-fullname">Image</label>
+                                                            </div>
+                                                            <div class="col-sm-11">
+                                                                <div class="md-img mb-3">
+                                                                    <img src="./assets/userImages/<%= editdata.image %>" alt="Avatar">
+                                                                </div>
+                                                                <div class="input-group input-group-merge">
+                                                                    <input type="file" id="upload" name="image" class="form-control" accept="image/png, image/jpeg,image/jpg" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-wrap">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option A</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="a" value="<%= editdata.option.a %>" placeholder="Option A"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option B</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="b" value="<%= editdata.option.b %>" placeholder="Option B"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option C</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="c"  value="<%= editdata.option.c %>" placeholder="Option C"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option D</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="d"  value="<%= editdata.option.d %>" placeholder="Option D"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="imgs-wrap">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option A</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="img_a"  value="<%= editdata.option.a %>" placeholder="Option A"/>
+                                                                        <!-- <input type="file" id="upload" name="img_a" class="form-control" accept="image/png, image/jpeg,image/jpg" /> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option B</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="img_b"  value="<%= editdata.option.b %>" placeholder="Option B"/>
+                                                                        <!-- <input type="file" id="upload" name="img_b" class="form-control" accept="image/png, image/jpeg,image/jpg" /> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option C</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="img_c"  value="<%= editdata.option.c %>"  placeholder="Option C"/>
+                                                                        <!-- <input type="file" id="upload" name="img_c" class="form-control" accept="image/png, image/jpeg,image/jpg" /> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option D</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="img_d"  value="<%= editdata.option.d %>"  placeholder="Option D"/>
+                                                                        <!-- <input type="file" id="upload" name="img_d" class="form-control" accept="image/png, image/jpeg,image/jpg" /> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="audio-wrap">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option A</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="audio_a" placeholder="Option A" value="<%= editdata.option.a %>"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option B</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="audio_b" placeholder="Option B" value="<%= editdata.option.b %>"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option C</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="audio_c" placeholder="Option C" value="<%= editdata.option.c %>"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-sm-2">
+                                                                    <label class="col-form-label" for="basic-icon-default-fullname">Option D</label>
+                                                                </div>
+                                                                <div class="col-sm-10">
+                                                                    <div class="input-group input-group-merge">
+                                                                        <input type="text" class="form-control" name="audio_d" placeholder="Option D" value="<%= editdata.option.d %>"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-1 col-form-label"
+                                                        for="basic-icon-default-fullname">Answer</label>
+                                                    <div class="col-sm-11">
+                                                        <div class="input-group input-group-merge">
+                                                            <input type="text" class="form-control" name="answer" required placeholder="Enter Answer" value="<%= editdata.answer %>"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-1 col-form-label"for="basic-icon-default-fullname">Description</label>
+                                                    <div class="col-sm-11">
+                                                        <div id="description"><%- editdata.description %></div>
+                                                        <input name="description" type="hidden">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <div class="row mt-5">
+                                            <div class="col-sm-1"></div>
+                                            <div class="col-sm-11">
+                                                <button type="submit" class="btn btn-primary" onclick="myFunction();">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    <script type="text/javascript">
+        // Function to update the options based on the selected categoryId
+        function updateOptions(categoryId) {
+            const quizzes = document.getElementById('quizSelect');
+            const options = quizzes.options;
+            
+            // Hide all options first
+            for (let i = 0; i < options.length; i++) {
+                options[i].style.display = 'none';
+            }
+    
+            // Show options with matching categoryId or show all options if categoryId is empty
+            for (let i = 0; i < options.length; i++) {
+                const categoryIdAttr = options[i].getAttribute('data-categoryid');
+                if (!categoryId || (categoryIdAttr && categoryIdAttr === categoryId)) {
+                    options[i].style.display = 'block';
+                }
+            }
+        }
+    
+        // Event listener for the categoryId select element
+        document.getElementById('defaultSelect').addEventListener('change', function() {
+            const categoryId = this.value;
+            let url = window.location.href;
+    
+            // Update the URL with the selected categoryId
+            const hasParams = url.includes('?');
+            const params = `categoryId=${categoryId}`;
+            if (hasParams) {
+                if (url.includes('&')) {
+                    url = url.replace(/&[^&]+$/, '&' + params);
+                } else {
+                    url += '&' + params;
+                }
+            } else {
+                url += `?${params}`;
+            }
+    
+            // Update the URL without reloading the page
+            window.history.pushState({ path: url }, '', url);
+    
+            // Update the options based on the selected categoryId
+            updateOptions(categoryId);
+        });
+    
+        // Initial update of options when the page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            const categoryId = document.getElementById('defaultSelect').value;
+            updateOptions(categoryId);
+        });
+    </script>
+    
+    <%- include('../layout/footer.ejs') %>
+
+
+           
